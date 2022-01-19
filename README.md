@@ -52,7 +52,7 @@ $wolframmathmeatica = vkGroupsGetById["groupId" -> "wolframmathematica"][["respo
 Import[$wolframmathmeatica[["photo_200"]]]
 ```
 
-![image](https://user-images.githubusercontent.com/16749283/150140029-e9b04f83-9cfc-462a-9a45-a22d6b104cb9.png)
+> ![image](https://user-images.githubusercontent.com/16749283/150140029-e9b04f83-9cfc-462a-9a45-a22d6b104cb9.png)
 
 
 Все участники группы (VKLink поддерживает для опции "count" значение All)
@@ -64,14 +64,14 @@ $wolframmathmeatica["members"] = vkGroupsGetMembers[
 	"fields" -> {"bdate", "education", "city", "country"}][["response", "items"]]
 ```
 
-```
-Out[] := <|"id" -> 620, "first_name" -> "Юрий", "last_name" -> "Баскаков", 
- "can_access_closed" -> False, "is_closed" -> True, 
- "bdate" -> "8.8.1985", 
- "city" -> <|"id" -> 2, "title" -> "Санкт-Петербург"|>, 
- "country" -> <|"title" -> "Россия", "id" -> 1|>|>, <|"id" -> 1876, 
- "first_name" -> "Дмитрий", "last_name" -> "Покровский", 
- "can_access_closed" -> True, "is_closed" -> False, 
- "city" -> <|"id" -> 2, "title" -> "Санкт-Петербург"|>, 
- "country" -> <|"title" -> "Россия", "id" -> 1|>|> (... 5845 ...)},
-```
+> ```
+> Out[] := <|"id" -> 620, "first_name" -> "Юрий", "last_name" -> "Баскаков", 
+>  "can_access_closed" -> False, "is_closed" -> True, 
+>  "bdate" -> "8.8.1985", 
+>  "city" -> <|"id" -> 2, "title" -> "Санкт-Петербург"|>, 
+>  "country" -> <|"title" -> "Россия", "id" -> 1|>|>, <|"id" -> 1876, 
+>  "first_name" -> "Дмитрий", "last_name" -> "Покровский", 
+>  "can_access_closed" -> True, "is_closed" -> False, 
+>  "city" -> <|"id" -> 2, "title" -> "Санкт-Петербург"|>, 
+>  "country" -> <|"title" -> "Россия", "id" -> 1|>|> (... 5845 ...)},
+> ```
