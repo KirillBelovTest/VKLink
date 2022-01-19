@@ -27,7 +27,7 @@ VKLink`Private`getToken[] = "<put your access token here>";
 $wolframmathmeatica = vkGroupsGetById["groupId" -> "wolframmathematica"][["response", 1]]
 ```
 
-````wolfram
+```wolfram
 Out[] := <|"id" -> 1172233, "name" -> "Wolfram Mathematica", 
  "screen_name" -> "wolframmathematica", "is_closed" -> 0, 
  "type" -> "group", "is_admin" -> 1, "admin_level" -> 3, 
