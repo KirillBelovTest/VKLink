@@ -64,7 +64,7 @@ $wolframmathmeatica["members"] = vkGroupsGetMembers[
 	"fields" -> {"bdate", "education", "city", "country"}][["response", "items"]]
 ```
 
-> ```
+> ```wolfram
 > Out[] := <|"id" -> 620, "first_name" -> "Юрий", "last_name" -> "Баскаков", 
 >  "can_access_closed" -> False, "is_closed" -> True, 
 >  "bdate" -> "8.8.1985", 
