@@ -138,7 +138,7 @@ vkapiexec[method_String, parameters: {(_String -> _)...}, opts: OptionsPattern[{
 					"count" -> count, 
 					"items" -> 
 						Flatten @ 
-						Map[vkapiexec[method, Prepend[parameters, "offset" -> #] /. All -> 1000, opts]["response", "items"]&] @ 
+						Map[Pause[0.01]; vkapiexec[method, Prepend[parameters, "offset" -> #] /. All -> 1000, opts]["response", "items"]&] @ 
 						Range[0, count, length]
 					|>
 				|>, 
