@@ -28,7 +28,7 @@ $wolframmathmeatica = vkGroupsGetById["groupId" -> "wolframmathematica"][["respo
 ```
 
 > ```wolfram
-> Out[] := <|"id" -> 1172233, "name" -> "Wolfram Mathematica", 
+> <|"id" -> 1172233, "name" -> "Wolfram Mathematica", 
 >  "screen_name" -> "wolframmathematica", "is_closed" -> 0, 
 >  "type" -> "group", "is_admin" -> 1, "admin_level" -> 3, 
 >  "is_member" -> 1, "is_advertiser" -> 1, 
@@ -65,7 +65,7 @@ $wolframmathmeatica["members"] = vkGroupsGetMembers[
 ```
 
 > ```wolfram
-> Out[] := <|"id" -> 620, "first_name" -> "Юрий", "last_name" -> "Баскаков", 
+> <|"id" -> 620, "first_name" -> "Юрий", "last_name" -> "Баскаков", 
 >  "can_access_closed" -> False, "is_closed" -> True, 
 >  "bdate" -> "8.8.1985", 
 >  "city" -> <|"id" -> 2, "title" -> "Санкт-Петербург"|>, 
