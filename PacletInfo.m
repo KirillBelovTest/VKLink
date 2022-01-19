@@ -1,19 +1,18 @@
-(*::Package::*)
-
+(* ::Package:: *)
 
 (* Paclet Info File *)
 
 
 Paclet[
-    Name -> "WLVKAPI",
-    Version -> "0.1.2",
+    Name -> "VKLink",
+    Version -> "0.2.0",
     MathematicaVersion -> "11.2+",
-    Description -> "WLVKAPI",
+    Description -> "VKLink",
     Creator -> "Kirill Belov",
     Extensions -> 
         {
             {"Documentation", Language -> "English"}, 
-            {"Kernel", Root -> ".", Context -> "WLVKAPI`"}
+            {"Kernel", Root -> ".", Context -> "VKLink`"}
         }
 ]
 

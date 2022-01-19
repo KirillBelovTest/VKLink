@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-BeginPackage["WLVKAPI`"];
+BeginPackage["VKLink`"];
 
 
 ClearAll["`*"]
@@ -18,7 +18,7 @@ ImportString[ExportString[URLRead[methodsURL]["Body"], "Text"], "RawJSON"];
 
 
 methodFormat[methodName_String] := 
-	"WLVKAPI`vk" <> 
+	"VKLink`vk" <> 
 	StringJoin[Function[m, ToUpperCase[StringTake[m, 1]] <> StringDrop[m, 1]] /@ 
 		StringSplit[methodName, "."]];
 
@@ -103,34 +103,49 @@ Options[vkapiexec] =
 
 getToken[] := getToken[] = 
 	Which[
-		FileExistsQ[".wlvkapi.m"], 
-			Get[".wlvkapi.m"]["token"], 
-		FileExistsQ[FileNameJoin[{$HomeDirectory, ".wlvkapi.m"}]], 
-			Get[FileNameJoin[{$HomeDirectory, ".wlvkapi.m"}]]["token"]
+		FileExistsQ[".vklink"], 
+			Get[".vklink"]["token"], 
+		FileExistsQ[FileNameJoin[{$HomeDirectory, ".vklink"}]], 
+			Get[FileNameJoin[{$HomeDirectory, ".vklink"}]]["token"]
 	];
 
 
 getVersion[] := getVersion[] = 
 	Which[
-		FileExistsQ[".wlvkapi.m"], 
-			Get[".wlvkapi.m"]["v"], 
-		FileExistsQ[FileNameJoin[{$HomeDirectory, ".wlvkapi.m"}]], 
-			Get[FileNameJoin[{$HomeDirectory, ".wlvkapi.m"}]]["v"]
+		FileExistsQ[".vklink"], 
+			Get[".vklink"]["version"], 
+		FileExistsQ[FileNameJoin[{$HomeDirectory, ".vklink"}]], 
+			Get[FileNameJoin[{$HomeDirectory, ".vklink"}]]["version"]
 	];
 
 
+vkapiexec::nsprtd = 
+"Not supported argument: `1` = `2`"
+
+
 vkapiexec[method_String, parameters: {(_String -> _)...}, opts: OptionsPattern[{}]] := 
-	Block[{query, response}, 
-		query = URLBuild[
-			{"https://api.vk.com/method", method}, 
-			Join[DeleteCases[parameters, _[_, Automatic | Null | None]], 
+	Block[{path, args, count, length}, 
+		path = {"https://api.vk.com/method", method}; 
+		args = Join[DeleteCases[parameters, _[_, Automatic | Null | None]], 
 			{
 				"access_token" -> OptionValue[vkapiexec, opts, "token"], 
 				"v" -> OptionValue[vkapiexec, opts, "v"]
-			}]
-		]; 
-		response = URLRead[query]["Body"]; 
-		ImportString[ExportString[response, "Text"], "RawJSON"]
+			}]; 
+		If[MatchQ[args, {___, Rule["count" | _Symbol?(SymbolName[#] == "count"&), All], ___}], 
+			{count, length} = {#count, Length[#items]}& @ vkapiexec[method, parameters /. All -> 1000, opts]["response"]; 
+			If[MatchQ[{count, length}, {_Integer, _Integer}], 
+				<|"response" -> <|
+					"count" -> count, 
+					"items" -> 
+						Flatten @ 
+						Map[vkapiexec[method, Prepend[parameters, "offset" -> #] /. All -> 1000, opts]["response", "items"]&] @ 
+						Range[0, count, length]
+					|>
+				|>, 
+				Message[vkapiexec::nsprtd, "count", All]; Null
+			], 
+			ImportString[ExportString[URLRead[URLBuild[path, args]]["Body"], "Text"], "RawJSON"]
+		]
 	];
 
 
@@ -138,7 +153,7 @@ symbols = SortBy[Table[createFunc[methodInfo],
 	{methodInfo, methodsSchema["methods"][[1 ;; -1]]}], ToString]; 
 
 
-End[];
+End[]; (*`Private`*)
 
 
-EndPackage[];
+EndPackage[]; (*VKLink`*)

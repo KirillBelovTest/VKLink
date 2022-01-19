@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      1913,         61]
-NotebookOptionsPosition[      1264,         42]
-NotebookOutlinePosition[      1783,         61]
-CellTagsIndexPosition[      1740,         58]
+NotebookDataLength[      1670,         55]
+NotebookOptionsPosition[      1108,         37]
+NotebookOutlinePosition[      1631,         56]
+CellTagsIndexPosition[      1588,         53]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -21,31 +21,26 @@ Notebook[{
 Cell[BoxData[
  RowBox[{"Get", "[", 
   "\"\<https://raw.githubusercontent.com/KirillBelovTest/WLVKAPI/master/\
-WLVKAPI.wl\>\"", "]"}]], "Code",ExpressionUUID->"bb083421-c367-45e0-8a59-\
+VKLink.wl\>\"", "]"}]], "Code",ExpressionUUID->"bb083421-c367-45e0-8a59-\
 f3785d6d1e2f"],
 
 Cell[BoxData[{
  RowBox[{
   RowBox[{
-   RowBox[{"WLVKAPI`Private`getVersion", "[", "]"}], " ", "=", " ", 
+   RowBox[{"VKLink`Private`getVersion", "[", "]"}], " ", "=", " ", 
    "\"\<5.131\>\""}], ";"}], "\n", 
  RowBox[{
   RowBox[{
-   RowBox[{"WLVKAPI`Private`getToken", "[", "]"}], " ", "=", " ", 
+   RowBox[{"VKLink`Private`getToken", "[", "]"}], " ", "=", " ", 
    "\"\<<put your access token here>\>\""}], ";"}]}], "Code",ExpressionUUID->\
-"e3f58e59-6260-4b46-b3c0-b3e70c995626"],
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"$wmruGroupId", " ", "=", " ", "1172233"}], ";"}]], "Code",Expressio\
-nUUID->"cf39eb73-8688-4d73-873b-561b4c421fc6"]
+"e3f58e59-6260-4b46-b3c0-b3e70c995626"]
 },
 WindowSize->{958, 988},
 WindowMargins->{{Automatic, -7}, {Automatic, 0}},
 TaggingRules->{
  "WelcomeScreenSettings" -> {"FEStarting" -> False}, "TryRealOnly" -> False},
 TrackCellChangeTimes->False,
-FrontEndVersion->"12.3 for Microsoft Windows (64-bit) (July 9, 2021)",
+FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"6e7ce272-9c51-4cbf-a973-f68d8c4e10a5"
 ]
@@ -60,9 +55,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 199, 4, 57, "Code",ExpressionUUID->"bb083421-c367-45e0-8a59-f3785d6d1e2f"],
-Cell[760, 26, 347, 9, 78, "Code",ExpressionUUID->"e3f58e59-6260-4b46-b3c0-b3e70c995626"],
-Cell[1110, 37, 150, 3, 57, "Code",ExpressionUUID->"cf39eb73-8688-4d73-873b-561b4c421fc6"]
+Cell[558, 20, 198, 4, 52, "Code",ExpressionUUID->"bb083421-c367-45e0-8a59-f3785d6d1e2f"],
+Cell[759, 26, 345, 9, 70, "Code",ExpressionUUID->"e3f58e59-6260-4b46-b3c0-b3e70c995626"]
 }
 ]
 *)
