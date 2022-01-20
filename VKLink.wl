@@ -97,7 +97,8 @@ createFunc[methodInfo: <|__|>] :=
 Options[vkapiexec] = 
 	{
 		"token" :> getToken[], 
-		"v" :> getVersion[]
+		"v" :> getVersion[], 
+		"timeout" :> 0.001
 	}; 
 
 
@@ -119,32 +120,38 @@ getVersion[] := getVersion[] =
 	];
 
 
-vkapiexec::nsprtd = 
-"Not supported argument: `1` = `2`"
+vkapiexec::ntsprtd = 
+"Not supported option: `1` -> `2`"
 
 
-vkapiexec[method_String, parameters: {(_String -> _)...}, opts: OptionsPattern[{}]] := 
-	Block[{path, args, count, length}, 
-		path = {"https://api.vk.com/method", method}; 
-		args = Join[DeleteCases[parameters, _[_, Automatic | Null | None]], 
+vkapiexec[method_String, args: {(_String -> _)...}, opts: OptionsPattern[{}]] := 
+	Block[{$path, $params, $bulkfun, $response, $len, $count, $offset, $items, $timeout}, 
+		$path = {"https://api.vk.com/method", method}; 
+		$params = Join[DeleteCases[args, _[_, Automatic | Null | None]], 
 			{
 				"access_token" -> OptionValue[vkapiexec, opts, "token"], 
 				"v" -> OptionValue[vkapiexec, opts, "v"]
 			}]; 
 		If[MatchQ[args, {___, Rule["count" | _Symbol?(SymbolName[#] == "count"&), All], ___}], 
-			{count, length} = {#count, Length[#items]}& @ vkapiexec[method, parameters /. All -> 1000, opts]["response"]; 
-			If[MatchQ[{count, length}, {_Integer, _Integer}], 
-				<|"response" -> <|
-					"count" -> count, 
-					"items" -> 
-						Flatten @ 
-						Map[Pause[0.01]; vkapiexec[method, Prepend[parameters, "offset" -> #] /. All -> 1000, opts]["response", "items"]&] @ 
-						Range[0, count, length]
-					|>
-				|>, 
-				Message[vkapiexec::nsprtd, "count", All]; Null
-			], 
-			ImportString[ExportString[URLRead[URLBuild[path, args]]["Body"], "Text"], "RawJSON"]
+			$response = vkapiexec[method, $params /. All -> 1000, opts];
+			$count = $response["response", "count"];
+			$len = Length[$response["response", "items"]]; 
+			$offset = 0; 
+			$timeout = 0.005; 
+			$items = {}; 
+			If[Not[IntegerQ[$len]] || Not[IntegerQ[$count]], Message[vkapiexec::ntsprtd, "count", All]; Return[Null]]; 
+			While[$offset < $count && $timeout < 1, 
+				Pause[$timeout]; 
+				$response = vkapiexec[method, Prepend[$params, "offset" -> $offset] /. All -> 1000, opts]; 
+				If[KeyExistsQ[$response, "error"] && $response["error", "error_code"] == 6, 
+					$timeout *= 2; 
+					Pause[1], 
+					$offset += $len; 
+					AppendTo[$items, $response["response", "items"]]
+				]; 
+			];
+			<|"response" -> <|"count" -> $count, "items" -> Flatten[$items]|>|>, 
+			ImportString[ExportString[URLRead[URLBuild[$path, $params]]["Body"], "Text"], "RawJSON"]
 		]
 	];
 
