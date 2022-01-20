@@ -103,19 +103,19 @@ Options[vkapiexec] =
 
 getToken[] := getToken[] = 
 	Which[
-		FileExistsQ[".vklink"], 
-			Get[".vklink"]["token"], 
 		FileExistsQ[FileNameJoin[{$HomeDirectory, ".vklink"}]], 
-			Get[FileNameJoin[{$HomeDirectory, ".vklink"}]]["token"]
+			Get[FileNameJoin[{$HomeDirectory, ".vklink"}]]["token"], 
+		FileExistsQ[".vklink"], 
+			Get[".vklink"]["token"]
 	];
 
 
 getVersion[] := getVersion[] = 
 	Which[
-		FileExistsQ[".vklink"], 
-			Get[".vklink"]["version"], 
 		FileExistsQ[FileNameJoin[{$HomeDirectory, ".vklink"}]], 
-			Get[FileNameJoin[{$HomeDirectory, ".vklink"}]]["version"]
+			Get[FileNameJoin[{$HomeDirectory, ".vklink"}]]["version"], 
+		FileExistsQ[".vklink"], 
+			Get[".vklink"]["version"]
 	];
 
 
