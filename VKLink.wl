@@ -78,7 +78,7 @@ createFunc[methodInfo: <|__|>] :=
 				Options[symbol] =!= {}, 
 				SyntaxInformation[symbol] = {
 					"ArgumentsPattern" -> {OptionsPattern[]}, 
-					"OptionNames" -> Keys[Association[Options[symbol]]]
+					"OptionNames" -> Keys[Association[Join[Options[symbol], Options[vkapiexec]]]]
 				}; 
 			];
 			symbol[opts: OptionsPattern[{symbol, vkapiexec}]] := 
@@ -98,7 +98,7 @@ Options[vkapiexec] =
 	{
 		"token" :> getToken[], 
 		"v" :> getVersion[], 
-		"timeout" :> 0.001
+		"lang" :> Automatic
 	}; 
 
 
@@ -127,11 +127,12 @@ vkapiexec::ntsprtd =
 vkapiexec[method_String, args: {(_String -> _)...}, opts: OptionsPattern[{}]] := 
 	Block[{$path, $params, $bulkfun, $response, $len, $count, $offset, $items, $timeout}, 
 		$path = {"https://api.vk.com/method", method}; 
-		$params = Join[DeleteCases[args, _[_, Automatic | Null | None]], 
+		$params = DeleteCases[Join[args, 
 			{
 				"access_token" -> OptionValue[vkapiexec, opts, "token"], 
-				"v" -> OptionValue[vkapiexec, opts, "v"]
-			}]; 
+				"v" -> OptionValue[vkapiexec, opts, "v"], 
+				"lang" -> OptionValue[vkapiexec, opts, "lang"]
+			}], _[_, Automatic | Null | None]]; 
 		If[MatchQ[args, {___, Rule["count" | _Symbol?(SymbolName[#] == "count"&), All], ___}], 
 			$response = vkapiexec[method, $params /. All -> 1000, opts];
 			$count = $response["response", "count"];
